@@ -2,14 +2,28 @@
 
 {% block content %}
     <div class="container">
-        <h1> Наши авторы </h1>
-        <ul>
+        <h3 class="text-center mb-4"> Наши авторы </h3>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for author in authors %}
-                <li class="info-text">
-                    <a class="nav-link" href="{{ url_for('authors.detail', id=author.id) }}">{{ author.user.username }}</a>
-                </li>
+                <div class=" col">
+                    <div class="article">
+                        <h4> {{ author.user.username.title() }}</h4>
+                    <h6 class="text-start">Имя: {{ author.user.first_name }}</h6>
+                    <h6 class="text-start">Фамилия: {{ author.user.last_name }}</h6>
+                    <h6 class="text-start">Колличество статей: {{ author.article | length }}</h6>
+
+                    <a class="mb-1" href="{{ url_for('authors.detail', id=author.id) }}">
+
+                        <button type="button" class="btn btn-outline-warning mt-2">Подробнее</button>
+                    </a>
+                    </div>
+
+
+                </div>
+
             {% endfor %}
-        </ul>
+        </div>
+
     </div>
 
 {% endblock content %}

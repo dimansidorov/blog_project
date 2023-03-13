@@ -1,15 +1,20 @@
 {% macro render_field(field) %}
-    <div class="row my-3">
-        {{ field.label(class="col-md-4 col-form-label") }}
-        <div class="col-sm-8">
-            {{ field(class="form-control" + (" is-invalid" if field.errors else ""))|safe }}
-            {% if field.errors %}
-                {% for error in field.errors %}
-                    <div class="invalid-feedback">
-                        {{ error }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
+    <div class="form-floating mb-3 text-muted">
+        {#        {% if field.name == 'tags' %}#}
+        {#            {{ field(id="floatingInput", class="form-select" + (" is-invalid" if field.errors else "")) | safe }}#}
+        {#            {{ field.label(for='floatingInput', class="") }}#}
+        {#        {% else %}#}
+        {{ field(id="floatingInput", class="form-control rounded-2 " + (" is-invalid" if field.errors else ""))|safe }}
+        {{ field.label(for='floatingInput', class="") }}
+
+        {#        {% endif %}#}
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="invalid-feedback">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {#        </div>#}
     </div>
 {% endmacro %}

@@ -1,0 +1,56 @@
+.my-pagination {
+    text-align: center;
+    user-select: none;
+}
+
+.my-pagination li {
+    display: inline-block;
+    margin: 5px;
+    box-shadow: 5px 5px 25px rgba(1, 1, 1, 1);
+}
+
+.my-pagination li a {
+    color: whitesmoke;
+    text-decoration: none;
+    font-size: 1em;
+    line-height: 2.6em;
+}
+
+.my-previous-page,
+.my-next-page {
+    background-color: rgba(80, 80, 80, 0.4);
+    border-radius: 10px;
+    width: 3em;
+    cursor: pointer;
+    box-shadow: 10px 5px 5px rgba(25, 24, 25, 1);
+}
+
+.my-previous-page:hover {
+    transform: translateX(-5px);
+}
+
+.my-next-page:hover {
+    transform: translateX(5px);
+}
+
+.current-page,
+.dots {
+    background-color: rgba(80, 80, 80, 0.5);
+    width: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.current-page:hover,
+.dots:hover {
+    transform: translateY(-5px);
+}
+
+.my-pagination li.active {
+    background: rgba(25, 24, 25, 1);
+}
+
+.my-pagination li.disable {
+    box-shadow: 0px 0px 0px rgba(25, 24, 25, 1);
+    background: transparent;
+}

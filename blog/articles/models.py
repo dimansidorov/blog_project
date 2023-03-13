@@ -28,7 +28,14 @@ class Article(db.Model):
     )
 
     def __repr__(self):
-        return f'{self.title} by {self.creator_id}'
+        return f'{self.title}'
+
+    def __str__(self):
+        return self.title
+
+    @staticmethod
+    def show_date(date):
+        return str(date)[:-10]
 
 
 class Tag(db.Model):
@@ -43,3 +50,6 @@ class Tag(db.Model):
 
     def __repr__(self):
         return str(self.id)
+
+    def __str__(self):
+        return self.name

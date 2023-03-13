@@ -29,7 +29,7 @@ def unauthorized():
 @auth_app.route('/register/', methods=["GET", "POST"], endpoint="register")
 def register():
     if current_user.is_authenticated:
-        redirect('articles.list')
+        return redirect(url_for('articles.list'))
 
     title = 'Регистрация'
     error = None
@@ -68,17 +68,18 @@ def register():
 @auth_app.route("/login/", methods=["GET", "POST"], endpoint="login")
 def login():
     if current_user.is_authenticated:
-        redirect('articles.list')
+        return redirect(url_for('articles.list'))
 
+    errors = None
     title = 'Авторизация'
     form = LoginForm(request.form)
     if request.method == "POST" and form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).one_or_none()
         if user is None:
-            return render_template("auth/login.html", form=form, error="username doesn't exist", title=title)
+            return render_template("auth/login.html", form=form, errors="username doesn't exist", title=title)
 
         if not user.validate_password(form.password.data):
-            return render_template("auth/login.html", form=form, error="invalid username or password", title=title)
+            return render_template("auth/login.html", form=form, errors="invalid username or password", title=title)
 
         login_user(user)
         return redirect(url_for("articles.list"))

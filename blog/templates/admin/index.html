@@ -1,0 +1,12 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+    <a class="mb-5 mt-5" href="{{ url_for('articles.list') }}">
+        <button type="button" class="btn btn-danger"><b> < </b> Вернуться на главную страницу</button>
+    </a>
+    <div class="container">
+        <h1 class="text-center"> Привет, администратор!</h1>
+        <h4 class="text-center"> Используй вкладку "Models" в верхнем меню для доступа к моделям.</h4>
+        <h4 class="text-center">Не злоупотребляй полномочиями :)</h4>
+    </div>
+{% endblock %}

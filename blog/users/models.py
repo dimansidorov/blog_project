@@ -27,3 +27,6 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"<User #{self.id} {self.username!r}>"
+
+    def __str__(self):
+        return self.username

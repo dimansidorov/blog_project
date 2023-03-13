@@ -1,12 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if user %}
+    {% if author %}
+
         <div class="container">
-            <h1 class="info-text"> Информация о пользователе: {{ user.username }}</h1>
-            <h4 class="info-text">ID: {{ user.id }}</h4>
-            <h4 class="info-text">email: {{ user.email }}</h4>
-            <h4 class="info-text">Staff: {{ user.is_staff }}</h4>
+            <a class="mb-5 mt-5" href="{{ url_for('authors.list') }}">
+                <button type="button" class="btn btn-danger"><b> < </b> Вернуться к авторам</button>
+            </a>
+            <h3 class="text-center mb-4"> Информация о пользователе </h3>
+            <div class="container article m-2">
+                {% if author.user.is_staff %}
+                    <h6>Администратор</h6>
+                {% else %}
+                    <h6>Пользователь</h6>
+                {% endif %}
+                <h5 class="text-start">Имя пользователя: {{ author.user.username.title() }}</h5>
+                <h5 class="info-text">Имя: {{ author.user.first_name.title() }}</h5>
+                <h5 class="info-text">Имя пользователя: {{ author.user.last_name.title() }}</h5>
+                <h5 class="info-text">Имя пользователя: {{ author.user.email }}</h5>
+                <h5 class="text-start">Статьи: </h5>
+                <ul>
+                    {% for item in author.article %}
+                        <li class="text-start">
+                            <a class="link-light"
+                               href="{{ url_for('articles.detail', id=item.id) }}"> {{ item }} </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     {% else %}
         <h1 class="info-text">{{ title }}</h1>

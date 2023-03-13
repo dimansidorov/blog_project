@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, request, current_app, url_for
 from flask_login import login_required, current_user
+from flask_paginate import Pagination, get_page_parameter, get_page_args
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import joinedload
 
@@ -17,10 +18,26 @@ articles = Blueprint(
 )
 
 
+def paginate(item, offset=0, per_page=3):
+    return item[offset:offset + per_page]
+
+
 @articles.route('/', endpoint='list')
 def articles_list():
-    all_articles = Article.query.all()
-    return render_template('articles/articles.html', title='Статьи', articles=all_articles)
+    page = request.args.get('page')
+
+    if page and page.isdigit():
+        page = int(page)
+    else:
+        page = 1
+
+    all_articles = Article.query.paginate(page=page, per_page=2)
+
+    return render_template(
+        'articles/articles.html',
+        title='Статьи',
+        articles=all_articles,
+    )
 
 
 @articles.route('/<id>', endpoint='detail')
@@ -59,6 +76,7 @@ def add_article():
             author_id = int(str(current_user.author)[1:-1])
 
         article = Article(title=form.title.data, body=form.body.data, author_id=author_id)
+        # print(form.tags)
         if form.tags.data:
             selected_tags = Tag.query.filter(Tag.id.in_(form.tags.data))
             for tag in selected_tags:

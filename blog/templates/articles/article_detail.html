@@ -1,27 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if article %}
-        <a class="mb-5 mt-5" href="{{ url_for('articles.list') }}">
-            <button type="button" class="btn btn-danger"><b> < </b> Вернуться к статьям</button>
-        </a>
-        <div class="container">
-            <h1 class="info-text mt-3 mb-2">{{ article.title }}</h1>
-            <hr>
-            <p class="info-text">{{ article.body }}</p>
-            <p> Автор статьи: <a class="" href="{{ url_for('authors.detail', id=article.author.id) }}">
-                {{ article.author.user.username }}
-            </a></p>
-        </div>
-        {% if article.tag %}
-            <div class="container ">
-                <p>Теги: </p>
-                {% for tag in article.tag %}
-                    <button class="btn btn-info btn-sm">{{ tag.name }}</button>
-                {% endfor %}
+    <div class="container">
+        {% if article %}
+            <a class="mb-5 mt-5" href="{{ url_for('articles.list') }}">
+                <button type="button" class="btn btn-danger"><b> < </b> Вернуться к статьям</button>
+            </a>
+            <div class="mt-3 article">
+                <h1 class="text-center mb-4">{{ article.title }}</h1>
+                <hr>
+                <p class="info-text">{{ article.body }}</p>
+                <p class="text-start"> Автор статьи: <a class="link-light" href="{{ url_for('authors.detail', id=article.author.id) }}">
+                    {{ article.author.user.username }}
+                </a></p>
+                <p class="text-start"> Последнее обновление: {{ article.show_date(article.update_at) }}</p>
+                {% if article.tag %}
+                <div class="row">
+                    <p class="text-start col-1">Теги: </p>
+                    {% for tag in article.tag %}
+                        <button class="btn btn-light btn-sm col-sm-2 g-2 m-lg-1">{{ tag.name }}</button>
+                    {% endfor %}
+                </div>
+            {% endif %}
             </div>
+
+        {% else %}
+            <h1 class="info-text">{{ title }}</h1>
         {% endif %}
-    {% else %}
-        <h1 class="info-text">{{ title }}</h1>
-    {% endif %}
+
+    </div>
+
 {% endblock content %}

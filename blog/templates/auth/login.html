@@ -2,23 +2,24 @@
 {% from 'macro/formhelpers.html' import render_field %}
 
 {% block content %}
-    <div class="form-signin w-100 m-auto article">
+    {#    <h1 class="h3 mb-1 fw-normal text-center">Авторизация</h1>#}
+    <div class="form-signin w-100 m-auto article modal-body ">
+        <h1 class="h3 fw-normal text-center">Авторизация</h1>
 
-        <h1 class="h3 mb-3 fw-normal">Авторизация</h1>
         {% if errors %}
-            {% for error in errors %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error }}
-                </div>
-            {% endfor %}
+            {#            {% for error in errors %}#}
+            <div class="alert alert-danger" role="alert">
+                {{ errors }}
+            </div>
+            {#            {% endfor %}#}
         {% endif %}
         <div>
-            <form method="POST">
+            <form method="POST" class="">
                 {% if 'csrf_token' in form %}
                     {{ form.csrf_token }}
                 {% endif %}
                 {% for field in ['username', 'password'] %}
-                    <div class="mt-2">
+                    <div class="m-3">
                         {{ render_field(form[field]) }}
                     </div>
 
@@ -26,14 +27,22 @@
 
                 <div>
 
-                    {{ form.submit(class="btn btn-outline-success m-3") }}
-                    <button type="button" class="btn btn-outline-primary">
-                        <a class="nav-link" href="{{ url_for('auth_app.register') }}">Зарегистрируйтесь</a>
-                    </button>
+                    {{ form.submit(class="btn btn-success m-2") }}
+                    <div class="form-signin w-100 m-auto">
+                        <p class=""> Новый пользователь? <a class="link-warning" href="{{ url_for('auth_app.register') }}">Зарегистрируйтесь </a>
+                        </p>
+                    </div>
+                    {#                    <p> </p>#}
+                    {#                    <button type="button" class="btn btn-outline-primary">#}
+                    {#                        <a class="nav-link" href="{{ url_for('auth_app.register') }}">Зарегистрируйтесь</a>#}
+                    {#                    </button>#}
                 </div>
 
             </form>
 
+
         </div>
+
     </div>
+
 {% endblock content %}

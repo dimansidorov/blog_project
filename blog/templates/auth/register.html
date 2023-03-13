@@ -2,23 +2,33 @@
 {% from 'macro/formhelpers.html' import render_field %}
 
 {% block content %}
-        <h2 class="text-center">Регистрация</h2>
-    {% if errors %}
-        {% for error in errors %}
-            <div class="alert alert-danger" role="alert">
-                {{ error }}
+    <div class="container">
+        <div class="m-auto mb-3 cover-container article">
+            <h2 class="text-center mb-4">Регистрация</h2>
+            {% if errors %}
+                {% for error in errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form method="POST" class="mx-3">
+                {% if 'csrf_token' in form %}
+                    {{ form.csrf_token }}
+                {% endif %}
+                {% for field in ['first_name', 'last_name', 'username', 'email', 'password', 'confirm'] %}
+                    {{ render_field(form[field]) }}
+                {% endfor %}
+                <div>
+                    {{ form.submit(class="btn btn-success ") }}
+                </div>
+
+            </form>
+            <div class="form-signin w-100 m-auto">
+                <p class="">У вас уже есть профиль? <a class="link-warning" href="{{ url_for('auth_app.login') }}">Авторизуйтесь</a>
+                </p>
             </div>
-        {% endfor %}
-    {% endif %}
-    <form method="POST" class="article">
-        {% if 'csrf_token' in form %}
-            {{ form.csrf_token }}
-        {% endif %}
-        {% for field in ['first_name', 'last_name', 'username', 'email', 'password', 'confirm'] %}
-            {{ render_field(form[field]) }}
-        {% endfor %}
-        <div>
-            {{ form.submit(class="btn btn-outline-success m-3") }}
         </div>
-    </form>
+    </div>
+
 {% endblock content %}

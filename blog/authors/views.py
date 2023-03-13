@@ -25,7 +25,7 @@ def authors_list():
 @login_required
 def author_detail(id):
     author = Author.query.filter_by(id=id).one_or_none()
-    print(current_user.is_staff)
+    # print(current_user.is_staff)
     if author is None:
         title = 'Автор не найден'
         return render_template('authors/author_detail.html',
@@ -34,4 +34,4 @@ def author_detail(id):
     else:
         return render_template('authors/author_detail.html',
                                title=f'Автор {author.user.username}',
-                               author=f'{author.user.first_name} {author.user.last_name}')
+                               author=author)

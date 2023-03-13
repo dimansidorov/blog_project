@@ -6,6 +6,9 @@ My pet-project is a blog web application built with Flask that allows users to c
 
 - Python 3.10
 - Flask
+- SQLAlchemy
+- Jinja2
+- Bootstrap 
 
 ## License
 

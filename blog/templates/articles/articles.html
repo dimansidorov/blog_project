@@ -1,33 +1,85 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="text-center">{{ title }}</h1>
 
-        {% for item in articles %}
+<div class="container mb-2">
 
-            <div class="info-text mb-3 mt-3 article">
-                <h3> {{ item.title }}</h3>
-                <hr>
-                <p> {{ item.body }}</p>
-{#                {% if item.tag %}#}
-{#                    <div class="mb-3">#}
-{#                        <p>Теги: </p>#}
-{#                        {% for tag in item.tag %}#}
-{#                            <button class="btn btn-info btn-sm">{{ tag.name }}</button>#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-{##}
-{#                {% endif %}#}
-                <a href="{{ url_for('articles.detail', id=item.id) }}">
+    <h3 class="text-center mb-4">{{ title }}</h3>
 
-                    <button type="button" class="btn btn-secondary">Подробнее</button>
+    {% for item in articles %}
+        <div class="info-text mb-3 mt-3 article">
+            <h3> {{ item.title }}</h3>
+            <hr>
+
+            <p> {{ item.body | truncate(130) }}</p>
+
+            {#                {% if item.tag %}#}
+            {#                    <div class="mb-3">#}
+            {#                        <p>Теги: </p>#}
+            {#                        {% for tag in item.tag %}#}
+            {#                            <button class="btn btn-info btn-sm">{{ tag.name }}</button>#}
+            {#                        {% endfor %}#}
+            {#                    </div>#}
+            {##}
+            {#                {% endif %}#}
+            <a href="{{ url_for('articles.detail', id=item.id) }}">
+
+                <button type="button" class="btn btn-outline-warning">Подробнее</button>
+            </a>
+        </div>
+    {% endfor %}
+    <a class="" href="{{ url_for('articles.add_article') }}">
+        <button type="button" class="btn btn-success "><b> + </b> Добавить статью</button>
+    </a>
+
+    {% block pagination %}
+
+    <div class="my-pagination mt-2">
+        {% if articles.has_prev %}
+        <li class="page-item my-previous-page">
+            <a {% if articles.has_prev %} href="./?page={{ articles.prev_num }}" {% endif %} class="page-link">
+                <span >&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        {% for page in articles.iter_pages() %}
+
+            <li class="dots current-page {% if page == articles.page %} active{% endif %}">
+                <a class="page-link" href="./?page={{ page }}">{{ page }}
                 </a>
-            </div>
+            </li>
         {% endfor %}
-        <a class="text-center" href="{{ url_for('articles.add_article') }}">
-            <button type="button" class="btn btn-success "><b> + </b> Добавить статью</button>
-        </a>
+        {% if articles.has_next %}
+        <li class="page-item my-next-page">
+            <a class="page-link"
+               {% if articles.has_next %} href="./?page={{ articles.next_num }}" {% endif %}><span>&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
     </div>
+
+
+    {#            <nav>#}
+    {#                <ul class="pagination mt-2 justify-content-center">#}
+    {#                    <li class="page-item{% if not articles.has_prev %} disabled {% endif %}">#}
+    {#                                    <a href="./?page={{ articles.prev_num }}" class="page-link">#}
+    {#                            <span aria-hidden="true">&laquo;</span>#}
+    {#                        </a>#}
+    {#                    </li>#}
+    {#                    {% for page in articles.iter_pages() %}#}
+
+{#    <li class="page-item"><a class="page-link {% if page == articles.page %} active {% endif %}"#}
+{#                             href="./?page={{ page }}">{{ page }}</a></li>#}
+{#    {% endfor %}#}
+    {#                    <li class="page-item">#}
+    {#                                    <a class="page-link {% if not articles.has_next %} disabled {% endif %}"#}
+    {#                                       href="./?page={{ articles.next_num }}"><span aria-label="Next">&raquo;</span></a>#}
+    {#                    </li>#}
+    {#                </ul>#}
+    {#            </nav>#}
+
+    {% endblock %}
+</div>
+
 
 {% endblock content %}
